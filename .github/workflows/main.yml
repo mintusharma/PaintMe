@@ -74,4 +74,22 @@ jobs:
           name: testReport.html
           path: app/build/report/tests/testDebugUnitTest/
 
+
+  package:
+    needs: [unit-test]
+    name: Generate APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the Code
+        uses: actions/checkout@v4
+
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug --stacktrace
+
+      - name: Upload Apk
+        uses: actions/upload-artifact@v4
+        with:
+          name: myPaint.apk
+          path: app/build/outputs/apk/debug/app-debug.apk
+
     # Runs a single command using the runners shell
